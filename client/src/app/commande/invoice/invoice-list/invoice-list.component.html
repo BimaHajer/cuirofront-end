@@ -1,0 +1,41 @@
+<div class="card">
+    <div class="card-header">
+      <h3>Invoices List</h3>
+      <button class="btn btn-primary" routerLink="/invoices/add">
+        <clr-icon shape="plus"></clr-icon> Add New Invoice
+      </button>
+    </div>
+    <div class="card-block">
+  
+      <clr-datagrid [(clrDgSelected)]="selected">
+        <clr-dg-column>ID</clr-dg-column>
+        <clr-dg-column>Customer Name</clr-dg-column>
+        <clr-dg-column>Date</clr-dg-column>
+        <clr-dg-column>Total Amount</clr-dg-column>
+        <clr-dg-column>Status</clr-dg-column>
+        <clr-dg-column>Actions</clr-dg-column>
+  
+        <clr-dg-row *ngFor="let invoice of invoices">
+          <clr-dg-cell>{{ invoice.id }}</clr-dg-cell>
+          <clr-dg-cell>{{ invoice.customerName }}</clr-dg-cell>
+          <clr-dg-cell>{{ invoice.date | date:'mediumDate' }}</clr-dg-cell>
+          <clr-dg-cell>{{ invoice.totalAmount | currency }}</clr-dg-cell>
+          <clr-dg-cell>
+            <span [ngClass]="{'text-success': invoice.status === 'Paid', 'text-danger': invoice.status === 'Unpaid'}">
+              {{ invoice.status }}
+            </span>
+          </clr-dg-cell>
+          <clr-dg-cell>
+            
+          
+          </clr-dg-cell>
+        </clr-dg-row>
+      </clr-datagrid>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-secondary" (click)="refreshInvoices()">
+        <clr-icon shape="refresh"></clr-icon> Refresh
+      </button>
+    </div>
+  </div>
+  

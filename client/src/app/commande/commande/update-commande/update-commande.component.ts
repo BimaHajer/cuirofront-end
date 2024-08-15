@@ -10,7 +10,6 @@ import { ProductsService } from 'src/app/products/products.service';
 import { FinanceService } from 'src/app/finance/finance.service';
 import { CommandeService } from '../../commande.service';
 import { ActivatedRoute, Params } from '@angular/router';
-
 @Component({
   selector: 'app-update-commande',
   templateUrl: './update-commande.component.html',

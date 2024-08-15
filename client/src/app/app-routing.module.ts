@@ -3,47 +3,54 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthGuard } from './auth/auth.guard';
 
-
 const routes: Routes = [
-  // { path: '', redirectTo: '/auth/login', pathMatch: 'full' }, // Redirection vers /auth/login par défaut
-  // { path: 'auth/login',canActivate: [AuthGuard], component: LoginComponent },
+  { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
+  { path: 'auth/login', component: LoginComponent },
+
   {
-    path:'products',canActivate: [AuthGuard],
+    path: 'products',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./products/products.module').then(m => m.ProductsModule)
-   },
-   {
-    path:'auth',
+  },
+  {
+    path: 'auth',
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
-   },
-   {
-    path:'finance',canActivate: [AuthGuard],
+  },
+  {
+    path: 'finance',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./finance/finance.module').then(m => m.FinanceModule)
-   },
-   {
-    path:'users',canActivate: [AuthGuard],
+  },
+  {
+    path: 'users',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
-   },
-   {
-    path:'dashboard',canActivate: [AuthGuard],
+  },
+  {
+    path: 'dashboard',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
-   },
-   {
-    path:'customer',canActivate: [AuthGuard],
+  },
+  {
+    path: 'customer',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule)
-   },
-   {
-    path:'commande',canActivate: [AuthGuard],
+  },
+  {
+    path: 'commande',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./commande/commande.module').then(m => m.CommandeModule)
-   },
-   {
-    path:'devis',canActivate: [AuthGuard],
+  },
+  {
+    path: 'devis',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./devis/devis.module').then(m => m.DevisModule)
-   }
-   
-   
-  
-   
-   
+  },
+  {
+    path: 'invoice',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./commande/invoice/invoice.module').then(m => m.InvoiceModule)
+  },
 ];
 
 @NgModule({

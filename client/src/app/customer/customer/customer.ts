@@ -4,6 +4,7 @@ export class Customer {
     public lastName?: string ;
     public email?: string ;
     public adress?: string ;
+    public phone?: string;  
     public telephone?: number ;
     public picture?: string ;
     public createAt?: string ;

@@ -1,1 +1,47 @@
-<p>print-invoice works!</p>
+<div class="card">
+    <div class="card-header">
+      <h3>Invoice #{{ invoice?.id }}</h3>
+      <button class="btn btn-outline-primary" (click)="onPrint()">
+        <clr-icon shape="printer"></clr-icon> Print
+      </button>
+    </div>
+    <div class="card-block">
+      <div class="row">
+        <div class="col-sm-6">
+          <h4>Invoice Information</h4>
+          <p><strong>Date:</strong> {{ invoice?.date | date }}</p>
+          <p><strong>Status:</strong> {{ invoice?.status }}</p>
+          <p><strong>Total Amount:</strong> {{ invoice?.totalAmount | currency }}</p>
+        </div>
+        <div class="col-sm-6">
+          <h4>Customer Information</h4>
+          <p><strong>Name:</strong> {{ customer?.firstName }}</p>
+          <p><strong>Email:</strong> {{ customer?.email }}</p>
+          <p><strong>Address:</strong> {{ customer?.adress }}</p>
+          <p><strong>Phone:</strong> {{ customer?.phone }}</p>
+        </div>
+      </div>
+  
+      <h4>Items</h4>
+      <clr-datagrid>
+        <clr-dg-column>Item</clr-dg-column>
+        <clr-dg-column>Quantity</clr-dg-column>
+        <clr-dg-column>Price</clr-dg-column>
+        <clr-dg-column>Total</clr-dg-column>
+  
+        <clr-dg-row *ngFor="let item of invoice?.items">
+          <clr-dg-cell>{{ item.name }}</clr-dg-cell>
+          <clr-dg-cell>{{ item.quantity }}</clr-dg-cell>
+          <clr-dg-cell>{{ item.price | currency }}</clr-dg-cell>
+          <clr-dg-cell>{{ item.quantity * item.price | currency }}</clr-dg-cell>
+        </clr-dg-row>
+      </clr-datagrid>
+  
+      <div class="row">
+        <div class="col-sm-12 text-right">
+          <h5><strong>Grand Total: {{ invoice?.totalAmount | currency }}</strong></h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  

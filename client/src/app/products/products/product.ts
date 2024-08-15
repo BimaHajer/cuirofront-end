@@ -21,7 +21,8 @@ export class Product {
     public productDetail?:ProductDetail[] 
     public CommandDetails?: CommandDetail[];
     public pictures?: Picture[];
-   
+    public quantity?: number; 
+    public price?: number;
 }
 
 export class ProductDetail{
@@ -40,6 +41,6 @@ export class ProductDetail{
     public priceId?:Price ;
     public TVAId?:TVA;
     public productId?: Product
-
+    
 
 }

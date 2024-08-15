@@ -1,0 +1,67 @@
+<span>
+    <span><a routerLink="../">Customer</a></span> /
+    <span><a>Add</a></span>
+</span>
+<section>
+    <h3>Add Customer</h3>
+    <clr-alert clrAlertType="success" *ngIf="show">
+        <clr-alert-item>
+            Addition of Customer {{name}} was successfully completed
+        </clr-alert-item>
+    </clr-alert>
+    <br>
+    
+    <form clrForm [formGroup]="customerForm" (ngSubmit)="submit()">
+        <clr-input-container>
+            <label>First Name*</label>
+            <input clrInput type="text" formControlName="firstName" />
+            <clr-control-error>This field is required!</clr-control-error>
+        </clr-input-container>
+
+        <clr-input-container>
+            <label>Last Name*</label>
+            <input clrInput type="text" formControlName="lastName" />
+            <clr-control-error>This field is required!</clr-control-error>
+        </clr-input-container>
+
+        <clr-input-container>
+            <label>Email*</label>
+            <input clrInput type="text" formControlName="email" />
+            <clr-control-error>This field is required and should be a valid email address!</clr-control-error>
+        </clr-input-container>
+
+        <clr-input-container>
+            <label>Address*</label>
+            <input clrInput type="text" formControlName="address" />
+            <clr-control-error>This field is required!</clr-control-error>
+        </clr-input-container>
+
+        <clr-input-container>
+            <label>Telephone*</label>
+            <input clrInput type="number" formControlName="telephone" />
+            <clr-control-error>This field is required!</clr-control-error>
+        </clr-input-container>
+
+        <clr-input-container>
+            <label>Picture*</label>
+            <input clrInput type="text" formControlName="picture" />
+            <clr-control-error>This field is required!</clr-control-error>
+        </clr-input-container>
+
+        <br>
+        <label class="alert-sm">* This field is required!</label>
+        <br><br>
+
+        <div class="btn-group btn-outline-primary">
+            <button class="btn btn-sm" routerLink="../" [disabled]="!show">
+                <clr-icon shape="undo"></clr-icon> Back
+            </button>
+            <button class="btn btn-sm" type="submit" [disabled]="customerForm.invalid || show">
+                <clr-icon shape="plus"></clr-icon> Save
+            </button>
+            <button class="btn btn-sm" [disabled]="!show" (click)="reset()">
+                <clr-icon shape="plus"></clr-icon> Create new
+            </button>
+        </div>
+    </form>
+</section>
