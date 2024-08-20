@@ -1,0 +1,85 @@
+<span>
+  <span><a routerLink="../">Provider</a></span> /
+  <span><a>Add</a></span>
+</span>
+<section>
+  <h3>Add Provider</h3>
+  <clr-alert clrAlertType="success" *ngIf="show">
+      <clr-alert-item>
+          Addition of Provider {{name}} was successfully completed
+      </clr-alert-item>
+  </clr-alert>
+  <br>
+  
+  <form clrForm [formGroup]="fournisseurForm" (ngSubmit)="submit()">
+      <clr-input-container>
+          <label>Name*</label>
+          <input clrInput type="text" formControlName="name" required />
+          <clr-control-error>
+              Name is required.
+          </clr-control-error>
+      </clr-input-container>
+
+      <clr-input-container>
+          <label>Telephone</label>
+          <input clrInput type="tel" formControlName="tel" />
+      </clr-input-container>
+
+      <clr-textarea-container>
+          <label>Description</label>
+          <textarea clrTextarea formControlName="description"></textarea>
+      </clr-textarea-container>
+
+      <clr-combobox-container>
+          <label>My contact*</label>
+          <clr-combobox name="mycontact" required (clrSelectionChange)="openChange($event)">
+              <clr-options>
+                  <clr-option *clrOptionItems="let contact of contacts; field: 'titleContact'" [clrValue]="contact">
+                      {{ contact.titleContact }}
+                  </clr-option>
+              </clr-options>
+          </clr-combobox>
+          <clr-control-helper>Helper text</clr-control-helper>
+          <clr-control-error>There was an error</clr-control-error>
+      </clr-combobox-container>
+
+      <br>
+      <label class="alert-sm">* This field is required!</label>
+      <br><br>
+
+      <div class="btn-group btn-outline-primary">
+          <button class="btn btn-sm" routerLink="../" [disabled]="!show">
+              <clr-icon shape="undo"></clr-icon> Back
+          </button>
+          <button class="btn btn-sm" type="submit" [disabled]="fournisseurForm.invalid || show">
+              <clr-icon shape="plus"></clr-icon> Save
+          </button>
+          <button class="btn btn-sm" [disabled]="!show" (click)="reset()">
+              <clr-icon shape="plus"></clr-icon> Create new
+          </button>
+      </div>
+  </form>
+</section>
+
+<div class="content-area">
+  <div class="alert alert-danger" *ngIf="showError" role="alert">
+      <div class="alert-items">
+          <div class="alert-item static">
+              <div class="alert-icon-wrapper">
+                  <cds-icon class="alert-icon" shape="error-standard"></cds-icon>
+              </div>
+              <span class="alert-text">{{message}}.</span>
+          </div>
+      </div>
+  </div>
+  <div class="alert alert-success" *ngIf="show" role="alert">
+      <div class="alert-items">
+          <div class="alert-item static">
+              <div class="alert-icon-wrapper">
+                  <cds-icon class="alert-icon" shape="success-standard"></cds-icon>
+              </div>
+              <span class="alert-text">{{message}}</span>
+          </div>
+      </div>
+  </div>
+</div>

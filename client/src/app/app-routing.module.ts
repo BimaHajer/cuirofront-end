@@ -5,10 +5,10 @@ import { AuthGuard } from './auth/auth.guard';
 
 
 const routes: Routes = [
-  // { path: '', redirectTo: '/auth/login', pathMatch: 'full' }, // Redirection vers /auth/login par défaut
-  // { path: 'auth/login',canActivate: [AuthGuard], component: LoginComponent },
+  { path: '', redirectTo: '/auth/login', pathMatch: 'full' }, // Redirection vers /auth/login par défaut
+  { path: 'auth/login', component: LoginComponent },
   {
-    path:'products',canActivate: [AuthGuard],
+    path:'products',
     loadChildren: () => import('./products/products.module').then(m => m.ProductsModule)
    },
    {
@@ -16,30 +16,31 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
    },
    {
-    path:'finance',canActivate: [AuthGuard],
+    path:'finance',
     loadChildren: () => import('./finance/finance.module').then(m => m.FinanceModule)
    },
    {
-    path:'users',canActivate: [AuthGuard],
+    path:'users',
     loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
    },
    {
-    path:'dashboard',canActivate: [AuthGuard],
+    path:'dashboard',
     loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
    },
    {
-    path:'customer',canActivate: [AuthGuard],
+    path:'customer',
     loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule)
    },
    {
-    path:'commande',canActivate: [AuthGuard],
+    path:'commande',
     loadChildren: () => import('./commande/commande.module').then(m => m.CommandeModule)
    },
    {
-    path:'devis',canActivate: [AuthGuard],
+    path:'devis',
     loadChildren: () => import('./devis/devis.module').then(m => m.DevisModule)
-   }
-   
+   },
+   { path:'provider',loadChildren:()=>import('./founisseur/founisseur.module').then(m=>m.FounisseurModule)},
+   { path:'buying',loadChildren:()=>import('./buying/buying.module').then(m=>m.BuyingModule)}
    
   
    

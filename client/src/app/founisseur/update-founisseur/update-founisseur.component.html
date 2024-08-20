@@ -1,0 +1,52 @@
+<span>
+  <span><a routerLink="../../">Provider</a></span> /
+  <span><a>Update</a></span>
+</span>
+<section>
+  <h3>Update Provider</h3>
+  <clr-alert clrAlertType="success" *ngIf="show" >
+      <clr-alert-item>
+       
+        Update of Provider {{name}} was successfully completed
+     
+      </clr-alert-item> 
+    </clr-alert>
+  <br>
+  
+  <form clrForm [formGroup]="form"  (ngSubmit)="submit()">
+      <clr-input-container>
+          <label>Name</label>
+          <input clrInput type="text"  formControlName="name" />
+          <clr-control-error  > This field is required ! </clr-control-error> 
+      </clr-input-container>
+
+      <clr-input-container>
+        <label>Tel</label>
+        <input clrInput type="text"  formControlName="tel" />
+        <clr-control-error  > This field is required ! </clr-control-error> 
+    </clr-input-container>
+
+      <clr-textarea-container>
+        <label for="description">Description</label>
+        <textarea clrTextarea id="description" formControlName="description"></textarea>
+      </clr-textarea-container>
+
+  
+  <clr-input-container>
+      <label>Picture*</label>
+      <input clrInput type="text"  formControlName="picture" />
+      <clr-control-error  > This field is required ! </clr-control-error> 
+  </clr-input-container>
+
+
+      <div class="btn-group btn-outline-primary">
+          <button class="btn btn-sm"  routerLink="../../" [disabled]="!show">
+            <clr-icon shape="undo"></clr-icon> Back
+          </button>
+          <button class="btn btn-sm"  type="submit" [disabled]="form.invalid|| show"  >
+            <clr-icon shape="plus"></clr-icon> Save
+          </button>
+        
+      </div>
+  </form>
+</section>
