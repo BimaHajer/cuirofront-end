@@ -1,0 +1,81 @@
+<span>
+    <span><a routerLink="../">Employer</a></span> /
+    <span><a>Add</a></span>
+</span>
+<section>
+    <h3>Add Employer</h3>
+    <clr-alert clrAlertType="success" *ngIf="show" >
+        <clr-alert-item>
+         
+          Addition of Accessory {{name}} was successfully completed
+       
+        </clr-alert-item> 
+      </clr-alert>
+    <br>
+    <form clrForm  [formGroup]="employerForm" (ngSubmit)="submit()">
+      <clr-select-container>
+        <label>Employer Role *</label>
+        <select clrSelect name="role"formControlName="role"> 
+          <option value="admin" >Administrator</option>
+          <option value="Employer">Employer</option>
+        </select>
+      </clr-select-container>
+      <clr-input-container>
+        <label >firstName*</label>
+        <input formControlName="firstName"  clrInput type="text"  autocomplete="firstName"  name="firstName" placeholder="Enter firstName"
+        />
+        <clr-control-error *clrIfError="'required'">invalid  firstName</clr-control-error>
+      </clr-input-container>
+      <clr-input-container>
+        <label >lastName*</label>
+        <input formControlName="lastName"  clrInput type="text"  autocomplete="lastName"  name="lastName" placeholder="Enter lastName"
+        />
+        
+        <clr-control-error *clrIfError="'required'">invalid  lastName</clr-control-error>
+      </clr-input-container>
+      <clr-input-container>
+        <label >Email*</label>
+        <input formControlName="email"  clrInput type="email"  autocomplete="email"  name="email"  placeholder="Enter e-mail"
+        />
+        <clr-control-error *clrIfError="'required'">invalid Email</clr-control-error>
+      </clr-input-container>
+      <clr-input-container>
+        <label >Telephone*</label>
+        <input formControlName="telephone"  clrInput type="number"  autocomplete="telephone"  name="telephone"  placeholder="Enter telephone"/>
+        <clr-control-error *clrIfError="'required'">invalid  Telephone</clr-control-error>
+      </clr-input-container>
+      <clr-input-container>
+        <label >Picture*</label>
+        <!-- <input formControlName="picture"  clrInput type="s"  autocomplete="email"  name="email"  placeholder="Enter e-mail"  /> -->
+        <!-- <clr-control-error *clrIfError="'required'">invalid  full Name</clr-control-error> -->
+      </clr-input-container>
+      <clr-password-container>
+        <label >Password*</label>
+        <input type="password" autocomplete="current-password"  name="password"  clrPassword  placeholder="Enter password"  formControlName="password"
+        />
+        <clr-control-error *clrIfError="'required'">invalid Password</clr-control-error>
+      </clr-password-container>
+      <clr-password-container>
+        <label for="confirmPassword">Confirm Password*</label>
+        <input id="confirmPassword" type="password" formControlName="confirmPassword" clrPassword placeholder="Confirm password" />
+        <clr-control-error *clrIfError="'required'">Confirm Password is required</clr-control-error>
+        <clr-control-error *clrIfError="'mismatch'">Passwords do not match</clr-control-error>
+      </clr-password-container>
+        <br>
+      
+      <br>
+        <div class="btn-group btn-outline-primary">
+            <button class="btn btn-sm"  routerLink="../" [disabled]="!show">
+              <clr-icon shape="undo"></clr-icon> Back
+            </button>
+            <button class="btn btn-sm"  type="submit" [disabled]="employerForm.invalid|| show"  >
+              <clr-icon shape="plus"></clr-icon> Save
+            </button>
+            <button class="btn btn-sm" [disabled]="!show" (click)=" reset()">
+              <clr-icon shape="plus"></clr-icon> Create new
+            </button>
+
+        </div>
+       
+      </form>
+</section> 

@@ -1,0 +1,40 @@
+<b style="font-size: 3em; color: rgb(0, 0, 0); margin: 10px;">Employer</b>
+<br>
+<br>
+<div class="btn-group btn-primary">
+    <button routerLink="add-employer" [disabled]="selectedEmployer.length>0" class="btn">Add</button>
+    <button routerLink="update-employer/{{id}}" [disabled]="selectedEmployer.length>1|| selectedEmployer.length==0"  class="btn btn-success">Modify</button>
+    <button class="btn btn-danger" [disabled]="selectedEmployer.length==0" (click)="showClick()">Delete</button>
+  </div>
+  <clr-datagrid (clrDgRefresh)="refresh($event)"  [(clrDgSelected)]="selectedEmployer"  (clrDgSelectedChange)="employerSelect($event)">
+  <clr-dg-column>user ID</clr-dg-column>
+  <clr-dg-column>Name</clr-dg-column>
+  <clr-dg-column>Role</clr-dg-column>
+
+  <clr-dg-row *clrDgItems="let employer of data" [clrDgItem]="data"  [clrDgItem]="employer">
+     
+    <clr-dg-cell>{{employer.id}}</clr-dg-cell>
+    <clr-dg-cell>{{employer.firstName}}{{employer.lastName}}</clr-dg-cell> 
+  
+    <clr-dg-cell>{{employer.role}}</clr-dg-cell>
+  </clr-dg-row> 
+  <clr-dg-detail *clrIfDetail="let detail">
+    <clr-dg-detail-header> <b style=" color: rgb(60, 58, 230)">id</b>:{{ detail.id }}</clr-dg-detail-header>
+    <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">firstName</b>:{{ detail.firstName }}</clr-dg-detail-body>
+    <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">lastName</b> :{{ detail.lastName}}</clr-dg-detail-body>
+    <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">Email</b> :{{ detail.email }}</clr-dg-detail-body>
+    <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">Role</b> :{{ detail.role }}</clr-dg-detail-body>
+    <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">Telephone</b> :{{ detail.telephone }}</clr-dg-detail-body>
+    <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">createAt</b> :{{ detail.createAt }}</clr-dg-detail-body>
+    <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">updateAt</b> :{{ detail.updateAt }}</clr-dg-detail-body>
+    <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">Active</b> :{{ detail.isActive }}</clr-dg-detail-body>
+    <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">createBy</b> :{{ detail.createBy }}</clr-dg-detail-body>
+    <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">updatedBy</b> :{{ detail.updatedBy }}</clr-dg-detail-body>
+ 
+
+  </clr-dg-detail>
+ 
+
+  <clr-dg-footer></clr-dg-footer>
+</clr-datagrid>
+<app-delete-employer *ngIf="show" [listEmployer]="list" (closed)="close()" (saved)="save()"></app-delete-employer>
