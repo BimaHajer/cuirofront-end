@@ -1,0 +1,61 @@
+<b style="font-size: 3em; color: rgb(0, 0, 0); margin: 10px;">Buying</b>
+<br>
+<br>
+<div class="btn-group btn-primary">
+    <button routerLink="add-buying" [disabled]="selectedBuying.length>0" class="btn">Add</button>
+    <button routerLink="update-buying/{{id}}" [disabled]="selectedBuying.length>1 || selectedBuying.length==0" class="btn btn-success">Modify</button>
+    <button class="btn btn-danger"  [disabled]="selectedBuying.length==0" (click)="showClick()">Delete</button>
+    <button  [disabled]="selectedBuying.length>1 || selectedBuying.length==0" class="btn btn-success"   (click)="updateIsValid(selectedBuying[0].id)">IsValid</button>
+    
+  </div>
+  
+  
+  <clr-datagrid (clrDgRefresh)="refresh($event)"  [(clrDgSelected)]="selectedBuying"  (clrDgSelectedChange)="buyingSelect($event)">
+      <clr-dg-column>buyingID</clr-dg-column>
+      <clr-dg-column>provider</clr-dg-column>
+      <clr-dg-column>Total price</clr-dg-column>
+      <clr-dg-column>createAt</clr-dg-column>
+      <clr-dg-column>isValid</clr-dg-column>
+      <clr-dg-row *clrDgItems="let buying of buyings" [clrDgItem]="buying"  [clrDgItem]="buying" >
+        <clr-dg-cell>{{buying.id}}</clr-dg-cell>
+        <clr-dg-cell>{{buying.idProvider?.name}}</clr-dg-cell>
+        <clr-dg-cell>{{buying.total_price}} </clr-dg-cell>
+        <clr-dg-cell>{{buying.createAt}}</clr-dg-cell>
+        <clr-dg-cell *ngIf="buying.isValid; else dangerBadge">
+          <span class="badge badge-success">
+            {{ buying.isValid }}
+            <span class="clr-sr-only"></span>
+          </span>
+        </clr-dg-cell>
+        
+        <ng-template #dangerBadge>
+          <clr-dg-cell>
+            <span class="badge badge-danger">
+              False
+              <span class="clr-sr-only"></span>
+            </span>
+          </clr-dg-cell> 
+        </ng-template>
+         
+      </clr-dg-row> 
+      <clr-dg-detail *clrIfDetail="let detail">
+        <clr-dg-detail-header> <b style=" color: rgb(60, 58, 230)">id</b>:{{ detail.id }}</clr-dg-detail-header>
+        <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">Provider</b>:{{ detail.providerId.name }}</clr-dg-detail-body>
+        <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">Transaction</b> :{{ detail.total_price}}</clr-dg-detail-body>
+        <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">Quantity</b> : {{ detail?.buyingDetail?.[0]?.quantity }} </clr-dg-detail-body>
+        <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">TotalTTC</b> : {{ detail?.buyingDetail?.[0]?.amount }} </clr-dg-detail-body>
+        <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">Product</b> : {{ detail?.buyingDetail?.[0]?.productId.name}} </clr-dg-detail-body>
+        <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">createAt</b> :{{ detail.createAt }}</clr-dg-detail-body>
+        <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">updateAt</b> :{{ detail.updateAt }}</clr-dg-detail-body>
+        <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">Active</b> :{{ detail.isActive }}</clr-dg-detail-body>
+        <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">createBy</b> :{{ detail.createBy }}</clr-dg-detail-body>
+        <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">updatedBy</b> :{{ detail.updatedBy }}</clr-dg-detail-body>
+     
+
+      </clr-dg-detail>
+      
+      <clr-dg-footer></clr-dg-footer>
+  </clr-datagrid>   
+  <app-buying-delete *ngIf="show" [ListDelete]="idList" (closed)="close()" (saved)="save()"></app-buying-delete>
+  
+     

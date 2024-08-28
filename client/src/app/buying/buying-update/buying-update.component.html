@@ -1,0 +1,232 @@
+<span>
+    <span><a routerLink="../../">Buying</a></span> /
+    <span><a>Modify</a></span>
+</span>
+<section>
+    <h3>Modify Buying</h3>
+    <clr-alert clrAlertType="success" *ngIf="show">
+        <clr-alert-item>
+            Addition of Buying {{name}} was successfully completed
+        </clr-alert-item>
+    </clr-alert>
+    <br>
+    <form clrStepper [formGroup]="form" (ngSubmit)="submit()">
+
+        <clr-stepper-panel formGroupName="Provider">
+            <clr-step-title>Provider</clr-step-title>
+
+            <clr-step-content *clrIfExpanded>
+
+                <clr-combobox-container>
+                    <label>Provider</label>
+                    <clr-combobox formControlName="name" name="myState" (clrInputChange)="openChange($event)">
+                        <clr-options>
+                            <clr-option *clrOptionItems="let provider of dataProvider" [clrValue]="provider">
+                                <cds-icon shape="user"></cds-icon>
+                                Name: {{ provider.name }}
+
+                            </clr-option>
+                        </clr-options>
+                    </clr-combobox>
+                </clr-combobox-container>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="left">id</th>
+                            <th>name</th>
+                            <th> tel</th>
+                            <th>description</th>
+                          </tr>
+                        </thead> 
+                        <tbody>
+                          <tr>
+                            <td class="left">{{ provider.id}}</td>
+                            <td>{{ provider.name}}</td>
+                            <td>{{ provider.tel}}</td>
+                            <td>{{ provider.description}}</td>
+                          </tr>
+                        </tbody>
+                </table>
+                <button clrStepButton="next">Next</button>
+            </clr-step-content>
+        </clr-stepper-panel>
+
+        <clr-stepper-panel formGroupName="Product">
+            <clr-step-title>Product</clr-step-title>
+            <clr-step-content *clrIfExpanded>
+
+                <label>Product</label>
+                <clr-combobox formControlName="productName" name="productName" (clrSelectionChange)="openChangeProduct($event)">
+                    <clr-options>
+                        <clr-option *clrOptionItems="let product of dataProduct; field: 'name'" [clrValue]="product">
+                            <cds-icon shape="key"></cds-icon>
+                            {{ product.name }}
+                        </clr-option>
+                    </clr-options>
+                </clr-combobox>
+                <clr-input-container *ngIf="selectedProduct">
+                    <label>Quantity</label>
+                    <input type="number" clrInput formControlName="detailQunatity" />
+                    {{ form.get('quantity.detailQunatity')?.value }}
+                </clr-input-container>
+
+                <button class="btn btn-success" [disabled]="(BuyingDetail.productId==null || form.value?.Product?.detailQunatity === '') && disabledProduct===true " (click)="AddProductCommande()">Add product</button>
+                <button class="btn btn-danger" [disabled]="selectedProduct.length==0" (click)="showModal=true">Delete</button>
+                <div *ngIf="showModal; then deleteProduct"></div>
+                <clr-datagrid clr-datagrid [(clrDgSelected)]="selectedProduct" (clrDgSelectedChange)="productSelect($event)">
+                    <clr-dg-column>Product ID</clr-dg-column>
+                    <clr-dg-column>Name</clr-dg-column>
+                    <clr-dg-column>Price hors Tax</clr-dg-column>
+                    <clr-dg-column>Price TTC</clr-dg-column>
+                    <clr-dg-column>Quantity</clr-dg-column>
+                    <clr-dg-column>TotaleTTC</clr-dg-column>
+                    <clr-dg-row *clrDgItems="let buyingDetail of BuyingDetails" [clrDgItem]="data" [clrDgItem]="buyingDetail" >
+                        <clr-dg-cell> {{buyingDetail?.productId?.id}}</clr-dg-cell>
+                        <clr-dg-cell> {{ buyingDetail.productId?.name}}</clr-dg-cell>
+                        <clr-dg-cell> {{ buyingDetail.productId?.priceHorsTax}}</clr-dg-cell>
+                        <clr-dg-cell> {{ buyingDetail.productId?.priceTTC}}</clr-dg-cell>
+                        <clr-dg-cell> {{ buyingDetail.quantity}}</clr-dg-cell>
+                        <clr-dg-cell> {{ buyingDetail.amount}}</clr-dg-cell>
+                        </clr-dg-row>
+                    <clr-dg-footer></clr-dg-footer>
+                </clr-datagrid>
+                <button clrStepButton="next" [disabled]="BuyingDetails.length==0">Next</button>
+            </clr-step-content>
+        </clr-stepper-panel>
+
+        <clr-stepper-panel formGroupName="transaction">
+            <clr-step-title>Transaction</clr-step-title>
+            <clr-step-content *clrIfExpanded>
+                <clr-alert>
+                    <clr-alert-item *ngIf="selectedProduct">
+                        <span class="alert-text">Total Montant:<b>{{ somme }}</b>, reset d' amount est<u><b>{{ resetAmount }}</b></u></span>
+                    </clr-alert-item>
+                </clr-alert>
+                <label>Transaction</label>
+                <clr-combobox formControlName="transactionName" name="myState" (clrSelectionChange)="openChangePayment($event)">
+                    <clr-options>
+                        <clr-option *clrOptionItems="let payment of dataPayment; field: 'payment'" [clrValue]="payment">
+                            <cds-icon shape="key"></cds-icon>
+                            {{ payment.payment }}
+                        </clr-option>
+                    </clr-options>
+                </clr-combobox>
+
+                <clr-radio-container clrInline>
+                    <clr-radio-wrapper>
+                        <input type="radio" clrRadio name="options" value="option1" formControlName="total" (change)="updateTransactionPrice()" />
+                        <label>Total</label>
+                    </clr-radio-wrapper>
+                    <clr-radio-wrapper>
+                        <input type="radio" clrRadio name="options" value="option2" formControlName="facilitatedBy" />
+                        <label>FacilitatedBy</label>
+                    </clr-radio-wrapper>
+                </clr-radio-container>
+                <clr-input-container>
+                    <label>Transaction</label>
+                    <input type="number" clrInput formControlName="transactionPrice" (change)="verifyAmountEntry()"/>
+                    {{ form.get('transaction.transactionPrice')?.value }}
+                </clr-input-container>
+
+                <button class="btn btn-success" (click)="AddTransactionCommande()" [disabled]="(resetAmount==0 || form.value?.transaction.transactionPrice==='') && form.value?.transaction.transactionPrice > resetAmount ">Add Amount</button>
+                <button class="btn btn-danger" [disabled]="selectedPayment.length==0" (click)="showModalDelete=true">Delete</button>
+                <div *ngIf="showModalDelete; then deleteTransaction"></div>
+                <clr-datagrid clr-datagrid [(clrDgSelected)]="selectedPayment" (clrDgSelectedChange)="paymentSelect($event)">
+                    <clr-dg-column>ModePayment</clr-dg-column>
+                    <clr-dg-column>Amount</clr-dg-column>
+                    <clr-dg-row *clrDgItems="let payment of Transactions" [clrDgItem]="data" [clrDgItem]="payment">
+                        <clr-dg-cell>{{ payment.payementId?.payment }}</clr-dg-cell>
+                        <clr-dg-cell>{{ payment.amount }}</clr-dg-cell>
+                    </clr-dg-row>
+                    <clr-dg-footer></clr-dg-footer>
+                </clr-datagrid>
+                <button clrStepButton="next" >Next</button>
+            </clr-step-content>
+        </clr-stepper-panel>
+
+        <clr-stepper-panel formGroupName="Buying">
+            <clr-step-title>Buying</clr-step-title>
+
+            <clr-step-content *clrIfExpanded>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Provider</th>
+                            <th>Product</th>
+                            <th>Transaction</th>
+                            <th>ResetAmount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ provider.name }}</td>
+                            <td>{{ product.name }}</td>
+                            <td>{{ somme }}</td>
+                            <td>{{ resetAmount }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </clr-step-content>
+            <div class="btn-group btn-outline-primary">
+                <button class="btn btn-sm" routerLink="../../" >
+                    <clr-icon shape="undo"></clr-icon> Back
+                </button>
+
+                <button class="btn btn-sm" type="submit" [disabled]="form.invalid || show">
+                    <clr-icon shape="plus"></clr-icon> Save
+                </button>
+            </div>
+
+        </clr-stepper-panel>
+
+    </form>
+
+    <ng-template #deleteProduct>
+        <div class="modal">
+            <div class="modal-dialog" role="dialog" aria-hidden="true">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button aria-label="Close" class="close" type="button">
+                            <cds-icon shape="close"></cds-icon>
+                        </button>
+                        <h3 class="modal-title">Delete Confirmation</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this item? This action is irreversible.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline" type="button" (click)="showModal=false">Cancel</button>
+                        <button class="btn btn-primary" type="button" (click)="confirmDelete()">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-backdrop" aria-hidden="true"></div>
+    </ng-template>
+
+    <ng-template #deleteTransaction>
+        <div class="modal">
+            <div class="modal-dialog" role="dialog" aria-hidden="true">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button aria-label="Close" class="close" type="button">
+                            <cds-icon shape="close"></cds-icon>
+                        </button>
+                        <h3 class="modal-title">Delete Confirmation</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this item? This action is irreversible.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline" type="button" (click)="showModalDelete=false">Cancel</button>
+                        <button class="btn btn-primary" type="button" (click)="confirmDeleteTransaction()">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-backdrop" aria-hidden="true"></div>
+    </ng-template>
+
+</section>
