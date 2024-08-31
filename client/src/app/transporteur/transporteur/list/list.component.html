@@ -1,0 +1,15 @@
+<clr-datagrid>
+    <clr-dg-column>Trasporteur ID</clr-dg-column>
+    <clr-dg-column>Name</clr-dg-column>
+    <clr-dg-column>tel</clr-dg-column>
+    
+
+    <clr-dg-row *ngFor="let Trasporteur of transporteurs">
+        <clr-dg-cell>{{Trasporteur.id}}</clr-dg-cell>
+        <clr-dg-cell>{{Trasporteur.name}}</clr-dg-cell>
+        <clr-dg-cell>{{Trasporteur.tel}}</clr-dg-cell>
+     
+    </clr-dg-row>
+
+    <clr-dg-footer>{{transporteurs.length}} users</clr-dg-footer>
+</clr-datagrid>
