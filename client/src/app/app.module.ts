@@ -18,6 +18,7 @@ import { UsersModule } from './users/users.module';
 import { RouterModule } from '@angular/router';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { AuthGuard } from './auth/auth.guard';
+import { PosteModule } from './poste/poste.module';
 
 
 
@@ -33,7 +34,7 @@ ClarityIcons.addIcons(userIcon,gridViewIcon,libraryIcon,dollarIcon,viewListIcon,
   ],
   imports: [
     BrowserModule,ClarityModule,BrowserAnimationsModule,ClrDatagridModule,HttpClientModule,UsersModule,
-    AppRoutingModule,CoreModule,ReactiveFormsModule,FormsModule,ProductsModule,FinanceModule,AuthModule,RouterModule,
+    AppRoutingModule,CoreModule,ReactiveFormsModule,FormsModule,ProductsModule,FinanceModule,AuthModule,RouterModule,PosteModule
   ],
   providers: [
     {

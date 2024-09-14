@@ -24,6 +24,10 @@ const routes: Routes = [
     loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
    },
    {
+    path:'poste',canActivate: [AuthGuard],
+    loadChildren: () => import('./poste/poste.module').then(m => m.PosteModule)
+   },
+   {
     path:'dashboard',canActivate: [AuthGuard],
     loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
    },

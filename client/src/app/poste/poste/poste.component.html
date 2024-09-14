@@ -1,0 +1,40 @@
+<b style="font-size: 3em; color: rgb(0, 0, 0); margin: 10px;">Poste</b>
+<br>
+<br>
+<div class="btn-group btn-primary">
+    <button routerLink="add-poste" [disabled]="selectedPoste.length>0" class="btn">Add</button>
+    <button routerLink="./update-post/{{id}}" [disabled]="selectedPoste.length>1|| selectedPoste.length==0"  class="btn btn-success">Modify</button>
+    <button class="btn btn-danger" [disabled]="selectedPoste.length==0" (click)="showClick()">Delete</button>
+  </div>
+  
+  
+  <clr-datagrid (clrDgRefresh)="refresh($event)"  [(clrDgSelected)]="selectedPoste"  (clrDgSelectedChange)="posteSelect($event)">
+      <clr-dg-column>poste ID</clr-dg-column>
+      <clr-dg-column>title</clr-dg-column>
+      <clr-dg-column>description</clr-dg-column>
+   
+      <clr-dg-row *clrDgItems="let poste of data"  [clrDgItem]="poste">
+         
+        <clr-dg-cell>{{poste.id}}</clr-dg-cell>
+        <clr-dg-cell>{{poste.title}}</clr-dg-cell> 
+      
+        <clr-dg-cell>{{poste.description}}</clr-dg-cell>
+      </clr-dg-row> 
+      <clr-dg-detail *clrIfDetail="let detail">
+        <clr-dg-detail-header> <b style=" color: rgb(60, 58, 230)">id</b>:{{ detail.id }}</clr-dg-detail-header>
+        <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">title</b>:{{ detail.title }}</clr-dg-detail-body>
+        <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">description</b> :{{ detail.description}}</clr-dg-detail-body>
+        <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">lieu</b> :{{ detail.lieu}}</clr-dg-detail-body>
+        <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">salary</b> :{{ detail.salary }}</clr-dg-detail-body>
+        <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">employmentType</b> :{{ detail.employmentType }}</clr-dg-detail-body>
+        <clr-dg-detail-body> <b style=" color: rgb(60, 58, 230)">exigences</b> :{{ detail.exigences }}</clr-dg-detail-body>
+
+      </clr-dg-detail>
+     
+  
+      <clr-dg-footer></clr-dg-footer>
+  </clr-datagrid>
+  <app-delete-post *ngIf="show" [listPoste]="list" (closed)="close()" (saved)="save()"></app-delete-post>
+  
+  
+    

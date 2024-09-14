@@ -1,0 +1,82 @@
+<span>
+  <span><a routerLink="../">poste</a></span> /
+  <span><a>Add</a></span>
+</span>
+<section>
+  <h3>Add poste</h3>
+
+  <!-- Clarity Alert for success message -->
+  <clr-alert clrAlertType="success" *ngIf="show">
+    <clr-alert-item>
+      Addition of Accessory {{ posteForm.get('description')?.value }} was successfully completed
+    </clr-alert-item>
+  </clr-alert>
+
+  <br>
+
+  <!-- Form Definition with formGroup and ngSubmit -->
+  <form clrForm [formGroup]="posteForm" (ngSubmit)="submit()">
+
+    <!-- Select for poste description -->
+    <clr-select-container>
+      <label>poste description *</label>
+      <select clrSelect name="description" formControlName="description">
+        <option value="administrateur systeme">administrateur systeme</option>
+        <option value="developpeur web">developpeur web</option>
+        <option value="chef de projet">chef de projet</option>
+        <option value="comptable">comptable</option>
+        <option value="ingenieur logiciel">ingenieur logiciel</option>
+        <option value="directeur Marketing">directeur Marketing</option>
+      </select>
+    </clr-select-container>
+
+    <!-- Input for Title -->
+    <clr-input-container>
+      <label>Title*</label>
+      <input formControlName="Title" clrInput type="text" autocomplete="Title" name="Title" placeholder="Enter Title" />
+      <clr-control-error *clrIfError="'required'">Invalid Title</clr-control-error>
+    </clr-input-container>
+
+    <!-- Input for Salary -->
+    <clr-input-container>
+      <label>salary*</label>
+      <input formControlName="salary" clrInput type="number" autocomplete="salary" name="salary" placeholder="Enter salary" />
+      <clr-control-error *clrIfError="'required'">Invalid salary</clr-control-error>
+    </clr-input-container>
+
+    <!-- Input for Lieu -->
+    <clr-input-container>
+      <label>lieu*</label>
+      <input formControlName="lieu" clrInput type="text" autocomplete="lieu" name="lieu" placeholder="Enter lieu" />
+      <clr-control-error *clrIfError="'required'">Invalid lieu</clr-control-error>
+    </clr-input-container>
+
+    <!-- Input for Employment Type -->
+    <clr-input-container>
+      <label>employmentType*</label>
+      <input formControlName="employmentType" clrInput type="text" autocomplete="employmentType" name="employmentType"
+        placeholder="Enter employmentType" />
+      <clr-control-error *clrIfError="'required'">Invalid employment type</clr-control-error>
+    </clr-input-container>
+
+    <br>
+
+    <!-- Button Group -->
+    <div class="btn-group btn-outline-primary">
+      <!-- Back Button -->
+      <button class="btn btn-sm" routerLink="../">
+        <clr-icon shape="undo"></clr-icon> Back
+      </button>
+
+      <!-- Save Button -->
+      <button class="btn btn-sm" type="submit" [disabled]="posteForm.invalid">
+        <clr-icon shape="plus"></clr-icon> Save
+      </button>
+
+      <!-- Create New Button -->
+      <button class="btn btn-sm" type="button" (click)="reset()">
+        <clr-icon shape="plus"></clr-icon> Create new
+      </button>
+    </div>
+  </form>
+</section>
